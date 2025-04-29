@@ -192,8 +192,7 @@ public class GraphNodeAL<T> {
             public List<GraphNodeAL2<?>> pathList=new ArrayList<>();
         }
         //Retrieve the cheapest path by expanding all paths recursively depth-first
-        public <T> CostedPath searchGraphDepthFirstCheapestPath(GraphNodeAL2<?> from, List<GraphNodeAL2<?>> encountered,
-                                                                       int totalCost, T lookingfor){
+        public <T> CostedPath searchGraphDepthFirstCheapestPath(GraphNodeAL2<?> from, List<GraphNodeAL2<?>> encountered, int totalCost, T lookingfor){
             if(from.data.equals(lookingfor)){ //Found it - end of path
                 CostedPath cp=new CostedPath(); //Create a new CostedPath object
                 cp.pathList.add(from); //Add the current node to it - only (end of path) element
@@ -214,7 +213,6 @@ public class GraphNodeAL<T> {
                 }//If no paths were found then return null. Otherwise, return the cheapest path (i.e. the one with min pathCost)
             return allPaths.isEmpty() ? null : Collections.min(allPaths, (p1,p2)->p1.pathCost-p2.pathCost);
         }//TODO pg 58 in slides so far
-
 
     }
 }
