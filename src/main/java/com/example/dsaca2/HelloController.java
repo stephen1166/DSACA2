@@ -4,20 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
 
 public class HelloController implements Initializable {
-    @FXML
-    private Label welcomeText;
     @FXML
     private ChoiceBox<String> searchOption;
     @FXML
@@ -29,8 +23,6 @@ public class HelloController implements Initializable {
     @FXML
     private ImageView mapView;
 
-    private File tempFile;
-
     private Image detailedMap;
 
     private Image simpleMap;
@@ -39,6 +31,11 @@ public class HelloController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Add options to the choiceBox
         searchOption.getItems().addAll("Fewest Stops", "Shortest Route", "Shortest with fewest changes");
+        try {
+            csvReader();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void detailedMap(ActionEvent actionEvent) throws IOException {
@@ -63,13 +60,16 @@ public class HelloController implements Initializable {
         BufferedReader csvReader = new BufferedReader(new InputStreamReader(inputStream));
 
         String line;
+        Set<String> stations = new TreeSet<>();
 
         while ((line = csvReader.readLine()) != null) {
             System.out.println(line);
             String[] data = line.split(",");
+            System.out.println("Start = " + data[0] + " End = " + data[1]);
+
+            stations.add(data[0]);
+            stations.add(data[1]);
         }
-
-
 
         startingStop.getItems().setAll(stations);
         endStop.getItems().setAll(stations);
