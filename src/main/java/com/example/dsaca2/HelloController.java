@@ -58,13 +58,14 @@ public class HelloController implements Initializable {
 //    }
 
     public void csvReader() throws IOException {
-        BufferedReader csvReader = new BufferedReader(new FileReader(String.valueOf(getClass().getResource("/data/vienna_subway.csv"))));
-        String line = "";
+        InputStream inputStream = getClass().getResourceAsStream("/data/vienna_subway.csv");
 
-        while((line = csvReader.readLine()) != null) {
-            System.out.println(line);
-            String[] data = line.split(",");
-            System.out.println("starting destination " + data[0] + "ending destination" + data[1]);
+        BufferedReader csvReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String line;
+
+        while ((line = csvReader.readLine()) != null) {
+            System.out.println(line);;
         }
     }
 }
