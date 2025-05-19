@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 
 import java.io.*;
 import java.net.URL;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class HelloController implements Initializable {
@@ -79,7 +78,7 @@ public class HelloController implements Initializable {
 
     public void exit(ActionEvent event)
     {
-        System.out.println("Luv u >.<");
+        System.out.println("exit");
         System.exit(-1);
     }
 }
