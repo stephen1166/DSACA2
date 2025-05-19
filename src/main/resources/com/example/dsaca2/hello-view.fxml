@@ -57,7 +57,7 @@
       </HBox>
       <ToolBar minWidth="1500.0" prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" text="Button" />
+           <Button mnemonicParsing="false" text="Button" onAction="#exit"/>
         </items>
       </ToolBar>
    </children>

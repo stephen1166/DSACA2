@@ -75,4 +75,10 @@ public class HelloController implements Initializable {
         endStop.getItems().setAll(stations);
         avoidStop.getItems().setAll(stations);
     }
+
+    public void exit(ActionEvent event)
+    {
+        System.out.println("exit");
+        System.exit(-1);
+    }
 }
