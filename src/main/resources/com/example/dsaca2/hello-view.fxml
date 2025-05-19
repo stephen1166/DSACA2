@@ -18,7 +18,7 @@
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label text="        Search Options: " />
-                        <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
+                        <ChoiceBox fx:id="searchOption" prefWidth="150.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -57,7 +57,7 @@
       </HBox>
       <ToolBar minWidth="1500.0" prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" text="Button" />
+          <Button mnemonicParsing="false" text="Button" onAction="#csvReader"/>
         </items>
       </ToolBar>
    </children>

@@ -37,7 +37,6 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         // Add options to the choiceBox
         searchOption.getItems().addAll("Fewest Stops", "Shortest Route", "Shortest with fewest changes");
     }
@@ -52,11 +51,11 @@ public class HelloController implements Initializable {
         mapView.setImage(simpleMap);
     }
 
-    public void choiceBoxOptions(ActionEvent actionEvent) throws IOException {
-        if (searchOption.getValue().equals("Fewest Stops")) {
-            String startingStop = startingStop.getValue();
-        }
-    }
+//    public void choiceBoxOptions(ActionEvent actionEvent) throws IOException {
+//        if (searchOption.getValue().equals("Fewest Stops")) {
+//            String startingStop = startingStop.getValue();
+//        }
+//    }
 
     public void csvReader() throws IOException {
         BufferedReader csvReader = new BufferedReader(new FileReader(String.valueOf(getClass().getResource("/data/vienna_subway.csv"))));
