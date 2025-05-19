@@ -27,6 +27,8 @@ public class HelloController implements Initializable {
 
     private Image simpleMap;
 
+    private ArrayList<GraphNodeAL> nodesAl = new ArrayList<>();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Add options to the choiceBox
@@ -67,8 +69,35 @@ public class HelloController implements Initializable {
             String[] data = line.split(",");
             System.out.println("Start = " + data[0] + " End = " + data[1]);
 
+
+
             stations.add(data[0]);
             stations.add(data[1]);
+
+            GraphNodeAL<String> a = new GraphNodeAL<>(data[0]);
+            GraphNodeAL<String> b = new GraphNodeAL<>(data[1]);
+
+            if(!nodesAl.contains(a)) {
+                nodesAl.add(a);
+            }
+            else {
+                a = nodesAl.get();
+            }
+            if(!nodesAl.contains(b)) {
+                nodesAl.add(b);
+            }
+            else {
+                b = nodesAl;
+            }
+            a.connectToNodeUndirected(b);
+
+//            if(a.adjList.contains(b)) {}
+//
+//            if(a.adjList.contains(a) || a.adjList.contains(b)) {
+//                a.connectToNodeUndirected(b);
+//            }
+
+
         }
 
         startingStop.getItems().setAll(stations);
