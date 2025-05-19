@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.*;
 import java.net.URL;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class HelloController implements Initializable {
@@ -79,5 +80,11 @@ public class HelloController implements Initializable {
         startingStop.getItems().setAll(stations);
         endStop.getItems().setAll(stations);
         avoidStop.getItems().setAll(stations);
+    }
+
+    public void exit(ActionEvent event)
+    {
+        System.out.println("Luv u >.<");
+        System.exit(-1);
     }
 }
