@@ -1,6 +1,7 @@
 module com.example.dsaca2 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.example.dsaca2 to javafx.fxml;
