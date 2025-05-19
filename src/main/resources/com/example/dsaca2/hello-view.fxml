@@ -24,19 +24,19 @@
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label text="Starting Destination: " />
-                        <ChoiceBox prefWidth="150.0" />
+                        <ChoiceBox fx:id="startingStop" prefWidth="150.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label text="   Avoid Destination: " />
-                        <ChoiceBox prefWidth="150.0" />
+                        <ChoiceBox fx:id="avoidStop" prefWidth="150.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label text="  Ending Destination: " />
-                        <ChoiceBox prefWidth="150.0" />
+                        <ChoiceBox fx:id="endStop" prefWidth="150.0" />
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" text="Confirm" />
