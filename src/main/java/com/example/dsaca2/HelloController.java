@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -35,13 +35,16 @@ public class HelloController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Add options to the choiceBox
         choiceBox.getItems().addAll("Fewest Stops", "Shortest Route", "Shortest with fewest changes");
-        detailedMap = new Image(getClass().getResourceAsStream("StationMapWithContent.png"));
+    }
+
+    public void detailedMap(ActionEvent actionEvent) throws IOException {
+        detailedMap = new Image(getClass().getResource("/Images/StationMapWithContent.png").openStream());
         mapView.setImage(detailedMap);
     }
 
-    public void loadMap(ActionEvent actionEvent){
-        mapView.setImage(detailedMap);
-        System.out.println("this does work, you are not crazy");
+    public void simpleMap(ActionEvent actionEvent) throws IOException {
+        simpleMap = new Image(getClass().getResource("/Images/StationMapBlank.png").openStream());
+        mapView.setImage(simpleMap);
     }
 
     public void choiceBoxOptions(ActionEvent actionEvent) throws IOException {

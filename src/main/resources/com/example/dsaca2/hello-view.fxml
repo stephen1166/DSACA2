@@ -39,7 +39,12 @@
             <VBox alignment="CENTER" minWidth="500.0" prefHeight="762.0" prefWidth="1008.0" spacing="10.0">
                <children>
                   <ImageView fx:id="mapView" fitHeight="724.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" text="Refresh" onAction="#loadMap"/>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#detailedMap" text="Detailed Map" />
+                        <Button mnemonicParsing="false" onAction="#simpleMap" text="Simple Map" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>
