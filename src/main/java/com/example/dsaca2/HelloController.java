@@ -63,15 +63,16 @@ public class HelloController implements Initializable {
         BufferedReader csvReader = new BufferedReader(new InputStreamReader(inputStream));
 
         String line;
-        Set<String> stations = new TreeSet<>();
 
         while ((line = csvReader.readLine()) != null) {
             System.out.println(line);
             String[] data = line.split(",");
-            System.out.println("Start = " + data[0] + " End = " + data[1]);
-
-            stations.add(data[0]);
-            stations.add(data[1]);
         }
+
+
+
+        startingStop.getItems().setAll(stations);
+        endStop.getItems().setAll(stations);
+        avoidStop.getItems().setAll(stations);
     }
 }
