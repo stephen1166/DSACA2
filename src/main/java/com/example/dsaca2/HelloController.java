@@ -35,6 +35,8 @@ public class HelloController implements Initializable {
         searchOption.getItems().addAll("Fewest Stops", "Shortest Route", "Shortest with fewest changes");
         try {
             csvReader();
+            detailedMap = new Image(getClass().getResource("/Images/StationMapWithContent.png").openStream());
+            mapView.setImage(detailedMap);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -133,5 +135,18 @@ public class HelloController implements Initializable {
     {
         System.out.println("exit");
         System.exit(-1);
+    }
+
+    public void choiceBox(ActionEvent actionEvent) {
+        if (searchOption.getValue().equals("Fewest Stops")) {
+            //have to make method that takes choice box inputs and runs them through GraphNodeAL.traverseDepthFirstSearch()
+            GraphNodeAL.searchGraphDepthFirst(startingStop,endStop);// something like this
+        }//same thing for the rest
+        if (startingStop.getValue().equals("Shortest Route")) {
+//            GraphNodeAL.searchGraphDepthFirst(startingStop,endStop);
+        }
+        if (endStop.getValue().equals("Shortest with fewest changes")) {
+//            GraphNodeAL.(startingStop,endStop);
+        }
     }
 }
