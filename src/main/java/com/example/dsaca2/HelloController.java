@@ -62,44 +62,71 @@ public class HelloController implements Initializable {
         BufferedReader csvReader = new BufferedReader(new InputStreamReader(inputStream));
 
         String line;
-        Set<String> stations = new TreeSet<>();
+        ArrayList<String> stations = new ArrayList<>();
 
         while ((line = csvReader.readLine()) != null) {
-            System.out.println(line);
+//            System.out.println(line);
             String[] data = line.split(",");
-            System.out.println("Start = " + data[0] + " End = " + data[1]);
-
+//            System.out.println("Start = " + data[0] + " End = " + data[1]);
 
 
             stations.add(data[0]);
             stations.add(data[1]);
 
-            GraphNodeAL<String> a = new GraphNodeAL<>(data[0]);
-            GraphNodeAL<String> b = new GraphNodeAL<>(data[1]);
-
-            if(!nodesAl.contains(a)) {
-                nodesAl.add(a);
-            }
-            else {
-                a = nodesAl.get();
-            }
-            if(!nodesAl.contains(b)) {
-                nodesAl.add(b);
-            }
-            else {
-                b = nodesAl;
-            }
-            a.connectToNodeUndirected(b);
-
-//            if(a.adjList.contains(b)) {}
-//
-//            if(a.adjList.contains(a) || a.adjList.contains(b)) {
-//                a.connectToNodeUndirected(b);
-//            }
-
-
         }
 
+        GraphNodeAL<String> a=null;
+        GraphNodeAL<String> b;
+
+        int l=0;
+
+        for (int i = 0; i < stations.size(); i++) {
+            int k=0;
+            for (int j = 0; j < nodesAl.size(); j++) {
+                if(nodesAl.size()==0){
+                    a=new GraphNodeAL<String>(stations.get(0));
+                    nodesAl.add(a);
+                } else if (stations.get(i).equals(nodesAl.get(j).data)){
+                    k=k+1;
+                    a=nodesAl.get(j);
+                    break;
+                }
+            }
+
+
+            if(k==0){
+                a = new GraphNodeAL<>(stations.get(i));
+                nodesAl.add(a);
+            }
+
+            if(i%2==1){
+                b=nodesAl.get(l);
+                a.connectToNodeUndirected(b);
+            }else{
+                for (int j=0;j<nodesAl.size();j++){
+                    if(a.data.equals(nodesAl.get(j).data)){
+                        l=j;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+//        }
+//        for (int i=0;i<stations.size();i++){
+//            System.out.println(stations.get(i));
+//        }
+
+
+        for (int i=0;i < nodesAl.size();i++){
+            System.out.println(nodesAl.get(i).data);
+            for (int j=0;j < nodesAl.get(i).adjList.size();j++) {
+                GraphNodeAL<String> temp= (GraphNodeAL<String>) nodesAl.get(i).adjList.get(j);
+                System.out.println(temp.data+" "+j+1);
+            }
+            System.out.println("\n");
+        }
         startingStop.getItems().setAll(stations);
         endStop.getItems().setAll(stations);
         avoidStop.getItems().setAll(stations);
