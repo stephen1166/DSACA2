@@ -64,14 +64,16 @@ public class HelloController implements Initializable {
         String line;
         ArrayList<String> stations = new ArrayList<>();
 
+
         while ((line = csvReader.readLine()) != null) {
 //            System.out.println(line);
             String[] data = line.split(",");
 //            System.out.println("Start = " + data[0] + " End = " + data[1]);
 
-
             stations.add(data[0]);
             stations.add(data[1]);
+
+
 
         }
 
@@ -84,7 +86,7 @@ public class HelloController implements Initializable {
             int k=0;
             for (int j = 0; j < nodesAl.size(); j++) {
                 if(nodesAl.size()==0){
-                    a=new GraphNodeAL<String>(stations.get(0));
+                    a=new GraphNodeAL<>(stations.get(0));
                     nodesAl.add(a);
                 } else if (stations.get(i).equals(nodesAl.get(j).data)){
                     k=k+1;
@@ -112,24 +114,19 @@ public class HelloController implements Initializable {
             }
         }
 
-
+//        for (int i=0;i < nodesAl.size();i++){
+//            System.out.println(nodesAl.get(i).data);
+//            for (int j=0;j < nodesAl.get(i).adjList.size();j++) {
+//                GraphNodeAL<String> temp= (GraphNodeAL<String>) nodesAl.get(i).adjList.get(j);
+//                System.out.println(temp.data);
+//            }
+//            System.out.println("\n");
 //        }
-//        for (int i=0;i<stations.size();i++){
-//            System.out.println(stations.get(i));
-//        }
-
-
-        for (int i=0;i < nodesAl.size();i++){
-            System.out.println(nodesAl.get(i).data);
-            for (int j=0;j < nodesAl.get(i).adjList.size();j++) {
-                GraphNodeAL<String> temp= (GraphNodeAL<String>) nodesAl.get(i).adjList.get(j);
-                System.out.println(temp.data+" "+j+1);
-            }
-            System.out.println("\n");
+        for (int i=0;i<nodesAl.size();i++){
+            startingStop.getItems().add( nodesAl.get(i).data.toString());
+            endStop.getItems().add( nodesAl.get(i).data.toString());
+            avoidStop.getItems().add(nodesAl.get(i).data.toString());
         }
-        startingStop.getItems().setAll(stations);
-        endStop.getItems().setAll(stations);
-        avoidStop.getItems().setAll(stations);
     }
 
     public void exit(ActionEvent event)
