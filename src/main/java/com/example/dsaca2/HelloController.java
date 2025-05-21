@@ -36,6 +36,12 @@ public class HelloController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Populate the search option choice box
         searchOption.getItems().addAll("Fewest Stops", "Shortest Route", "Shortest with fewest changes");
+        startingStop.getItems().add("");
+        startingStop.getSelectionModel().select(0);
+        avoidStop.getItems().add("");
+        avoidStop.getSelectionModel().select(0);
+        endStop.getItems().add("");
+        endStop.getSelectionModel().select(0);
 
         try {
             // Read station data from CSV and set up the map
@@ -144,21 +150,21 @@ public class HelloController implements Initializable {
         if (searchOption.getValue().equals("Fewest Stops")) {
             // Placeholder for fewest stops search logic
             for (int i = 0; i < nodesAl.size(); i++) {// TODO THIS ALL DOESNT WORK WHOOOOOOOOOOOOOOOOOOOOOOOO!!!!!!
-                if(startingStop.getValue().equals(nodesAl.get(i).data.toString())){
+                if(startingStop.getValue().equals(nodesAl.get(i).data)){
                     startPoint = i;
                 }
-                if(endStop.getValue().equals(nodesAl.get(i).data.toString())){
+                if(endStop.getValue().equals(nodesAl.get(i).data)){
                     endPoint = i;
                 }
-                if(avoidStop != null){
-                    if (nodesAl.get(i).data.toString().equals(avoidStop.getValue())) {
+                if(!avoidStop.getValue().equals("")){
+                    if (nodesAl.get(i).data.toString().equals(avoidStop)) {
                         avoidPoint = i;
                     }
                 }
-                System.out.println(nodesAl.get(startPoint).data.toString() + " " + nodesAl.get(endPoint).data.toString());
-                if(startPoint != -1 && endPoint != -1) {
-                    // TODO GraphNodeAL.traverseGraphDepthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), (List<GraphNodeAL<?>>) nodesAl.get(endPoint));
-                }
+            }
+            System.out.println(nodesAl.get(startPoint).data.toString() + " " + nodesAl.get(endPoint).data.toString());
+            if(startPoint != -1 && endPoint != -1) {
+                // TODO GraphNodeAL.traverseGraphDepthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), (List<GraphNodeAL<?>>) nodesAl.get(endPoint));
             }
         }
         if (startingStop.getValue().equals("Shortest Route")) {
