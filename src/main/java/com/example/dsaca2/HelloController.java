@@ -164,7 +164,11 @@ public class HelloController implements Initializable {
             }
 //            System.out.println(nodesAl.get(startPoint).data.toString() + " " + nodesAl.get(endPoint).data.toString());
             if(startPoint != -1 && endPoint != -1) {
-                System.out.println(GraphNodeAL.searchGraphDepthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), null, nodesAl.get(endPoint).data).data);
+                ArrayList<GraphNodeAL<?>> results = GraphNodeAL.findPathBreadthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), nodesAl.get(endPoint).data);
+                for(int i=0;i<results.size();i++){
+                    System.out.println(results.get(i).data);
+                    if(i<results.size()-1){System.out.println("vvvv");}
+                }
             }
         }
         if (startingStop.getValue().equals("Shortest Route")) {
