@@ -50,12 +50,13 @@ public class GraphNode<T> {
         }
         if (encountered == null) encountered = new ArrayList<>(); //First node so create new (empty) encountered list
         encountered.add(from); //Add current node to encountered list
-        for (GraphNode.GraphLink adjNode : from.adjList) {
-            if (!encountered.contains(adjNode)) {
-                temp2 = findAllPathsDepthFirst(adjNode.destNode, new ArrayList<>(encountered), lookingfor); //Use clone of encountered list for recursive call!
+        for (GraphNode.GraphLink adjLink : from.adjList) {
+            if (!encountered.contains(adjLink.destNode)) {
+                temp2 = findAllPathsDepthFirst(adjLink.destNode, new ArrayList<>(encountered), lookingfor); //Use clone of encountered list for recursive call!
                 if (temp2 != null) { //Result of the recursive call contains one or more paths to the solution node
-                    for (ArrayList<GraphNode<?>> x : temp2) //For each partial path list returned
+                    for (ArrayList<GraphNode<?>> x : temp2) {//For each partial path list returned
                         x.add(0, from); //Add the current node to the front of each path list
+                    }
                     if (result == null)
                         result = temp2; //If this is the first set of solution paths found use it as the result
                     else result.addAll(temp2); //Otherwise append them to the previously found paths
