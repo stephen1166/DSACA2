@@ -149,7 +149,7 @@ public class HelloController implements Initializable {
         int avoidPoint = -1;
         if (searchOption.getValue().equals("Fewest Stops")) {
             // Placeholder for fewest stops search logic
-            for (int i = 0; i < nodesAl.size(); i++) {// TODO THIS ALL DOESNT WORK WHOOOOOOOOOOOOOOOOOOOOOOOO!!!!!!
+            for (int i = 0; i < nodesAl.size(); i++) {
                 if(startingStop.getValue().equals(nodesAl.get(i).data)){
                     startPoint = i;
                 }
@@ -162,9 +162,9 @@ public class HelloController implements Initializable {
                     }
                 }
             }
-            System.out.println(nodesAl.get(startPoint).data.toString() + " " + nodesAl.get(endPoint).data.toString());
+//            System.out.println(nodesAl.get(startPoint).data.toString() + " " + nodesAl.get(endPoint).data.toString());
             if(startPoint != -1 && endPoint != -1) {
-                // TODO GraphNodeAL.traverseGraphDepthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), (List<GraphNodeAL<?>>) nodesAl.get(endPoint));
+                System.out.println(GraphNodeAL.searchGraphDepthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), null, nodesAl.get(endPoint).data).data);
             }
         }
         if (startingStop.getValue().equals("Shortest Route")) {
