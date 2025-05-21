@@ -14,6 +14,9 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
+import static com.example.dsaca2.GraphNode.findAllPathsDepthFirst;
+import static com.example.dsaca2.GraphNode.findPathBreadthFirst;
+
 public class HelloController implements Initializable {
 
     // FXML-injected UI components
@@ -35,7 +38,7 @@ public class HelloController implements Initializable {
     private Image simpleMap;
 
     // List to hold graph nodes representing stations
-    private ArrayList<GraphNodeAL> nodesAl = new ArrayList<>();
+    private ArrayList<GraphNode> nodesAl = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -84,61 +87,94 @@ public class HelloController implements Initializable {
 
         String line;
         ArrayList<String> stations = new ArrayList<>();
-
+        int counter = 0;
         // Read each line from the CSV and extract station pairs
         while ((line = csvReader.readLine()) != null) {
             String[] data = line.split(",");
-            stations.add(data[0]); // Start station
-            stations.add(data[1]); // End station
-        }
+//            stations.add(data[0]); // Start station
+//            stations.add(data[1]); // End station
 
-        GraphNodeAL<String> a = null; // Current station node
-        GraphNodeAL<String> b;        // Previous station node
-        int l = 0;                    // Index of previous station node
+            GraphNode<String> a = null; // Current station node
+            GraphNode<String> b = null; // Previous station node
 
-        // Build graph nodes and connect them
-        for (int i = 0; i < stations.size(); i++) {
-            int k = 0; // Counter to check if node already exists
-
-            // Check if node already exists in the list
-            for (int j = 0; j < nodesAl.size(); j++) {
-                if (nodesAl.size() == 0) {
-                    a = new GraphNodeAL<>(stations.get(0));
-                    nodesAl.add(a);
-                } else if (stations.get(i).equals(nodesAl.get(j).data)) {
-                    k = k + 1;
-                    a = nodesAl.get(j);
-                    break;
-                }
-            }
-
-            // If the node doesn't exist, create and add it
-            if (k == 0) {
-                a = new GraphNodeAL<>(stations.get(i));
+            if (nodesAl.size() == 0) {
+                a = new GraphNode<>(data[0]);
+                b = new GraphNode<>(data[1]);
                 nodesAl.add(a);
-            }
-
-            // Connect every second station (i is odd) to the previous one
-            if (i % 2 == 1) {
-                b = nodesAl.get(l);
-                a.connectToNodeUndirected(b); // Undirected connection between nodes
+                nodesAl.add(b);
             } else {
-                // Store the current index for the next connection
-                for (int j = 0; j < nodesAl.size(); j++) {
-                    if (a.data.equals(nodesAl.get(j).data)) {
-                        l = j;
-                        break;
+                for (int i = 0; i < nodesAl.size(); i++) {
+                    if (data[0].equals(nodesAl.get(i).data)) {
+                        a = nodesAl.get(i);
+                    }
+                    if (data[1].equals(nodesAl.get(i).data)) {
+                        b = nodesAl.get(i);
                     }
                 }
+                if (a == null) {
+                    a = new GraphNode<>(data[0]);
+                    nodesAl.add(a);
+                }
+                if (b == null) {
+                    b = new GraphNode<>(data[1]);
+                    nodesAl.add(b);
+                }
             }
+            a.connectToNodeUndirected(b, Integer.parseInt(data[4]));
         }
-
-        // Populate the UI dropdowns with station names
         for (int i = 0; i < nodesAl.size(); i++) {
+            System.out.println(nodesAl.get(i).data);
+            for (int j=0;j<nodesAl.get(i).adjList.size();j++){
+                GraphNode.GraphLink temp = (GraphNode.GraphLink) nodesAl.get(i).adjList.get(j);
+                System.out.println(temp.destNode.data);
+            }
+            System.out.println("");
             startingStop.getItems().add(nodesAl.get(i).data.toString());
             endStop.getItems().add(nodesAl.get(i).data.toString());
             avoidStop.getItems().add(nodesAl.get(i).data.toString());
         }
+
+//        GraphNode<String> a = null; // Current station node
+//        GraphNode<String> b = null;        // Previous station node
+//        int l = 0;                    // Index of previous station node
+//
+//        // Build graph nodes and connect them
+//        for (int i = 0; i < stations.size(); i++) {
+//            int k = 0; // Counter to check if node already exists
+//
+//            // Check if node already exists in the list
+//            for (int j = 0; j < nodesAl.size(); j++) {
+//                if (nodesAl.size() == 0) {
+//                    a = new GraphNode<>(stations.get(0));
+//                    nodesAl.add(a);
+//                } else if (stations.get(i).equals(nodesAl.get(j).data)) {
+//                    k = k + 1;
+//                    a = nodesAl.get(j);
+//                    break;
+//                }
+//            }
+
+//            // If the node doesn't exist, create and add it
+//            if (k == 0) {
+//                a = new GraphNode<>(stations.get(i));
+//                nodesAl.add(a);
+//            }
+//
+//            // Connect every second station (i is odd) to the previous one
+//            if (i % 2 == 1) {
+//                b = nodesAl.get(l);
+//                a.connectToNodeUndirected(b); // Undirected connection between nodes
+//            } else {
+//                // Store the current index for the next connection
+//                for (int j = 0; j < nodesAl.size(); j++) {
+//                    if (a.data.equals(nodesAl.get(j).data)) {
+//                        l = j;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+        // Populate the UI dropdowns with station names
     }
 
     // Closes the application when called
@@ -168,9 +204,8 @@ public class HelloController implements Initializable {
                 }
             }
             if(startPoint != -1 && endPoint != -1) {
-                ArrayList<GraphNodeAL<?>> results = GraphNodeAL.findPathBreadthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), nodesAl.get(endPoint).data);
+                ArrayList<GraphNode<?>> results = findPathBreadthFirst(nodesAl.get(startPoint), nodesAl.get(endPoint).data);
                 for(int i=0;i<results.size();i++){
-                    System.out.println(results.get(i).data);
                     if(i<results.size()-1){
                         System.out.println("    |    ");
                         System.out.println("    V    ");
@@ -180,7 +215,7 @@ public class HelloController implements Initializable {
             }
         }
         if (searchOption.getValue().equals("Fewest Stops Multiple Routes")) {
-            ArrayList<ArrayList<GraphNodeAL<?>>> results = GraphNodeAL.findAllPathsDepthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), null, nodesAl.get(endPoint).data);
+            ArrayList<ArrayList<GraphNode<?>>> results = findAllPathsDepthFirst((GraphNode<?>) nodesAl.get(startPoint), null, nodesAl.get(endPoint).data);
             for(int i=0;i<results.size();i++){
                 for(int j=0;j<results.size();j++) {
                     System.out.println(results.get(i).get(j).data);
@@ -199,7 +234,7 @@ public class HelloController implements Initializable {
         }
     }
 
-    public void showRouteNoCost(ArrayList<GraphNodeAL<?>> arrayList) throws IOException {
+    public void showRouteNoCost(ArrayList<GraphNode<?>> arrayList) throws IOException {
         clearScreen();
 
     }
