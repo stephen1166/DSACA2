@@ -138,9 +138,28 @@ public class HelloController implements Initializable {
 
     // Handles logic for user's search choice
     public void choiceBox(ActionEvent actionEvent) {
+        int startPoint = -1;
+        int endPoint = -1;
+        int avoidPoint = -1;
         if (searchOption.getValue().equals("Fewest Stops")) {
             // Placeholder for fewest stops search logic
-            GraphNodeAL.searchGraphDepthFirst(startingStop, endStop);
+            for (int i = 0; i < nodesAl.size(); i++) {// TODO THIS ALL DOESNT WORK WHOOOOOOOOOOOOOOOOOOOOOOOO!!!!!!
+                if(startingStop.getValue().equals(nodesAl.get(i).data.toString())){
+                    startPoint = i;
+                }
+                if(endStop.getValue().equals(nodesAl.get(i).data.toString())){
+                    endPoint = i;
+                }
+                if(avoidStop != null){
+                    if (nodesAl.get(i).data.toString().equals(avoidStop.getValue())) {
+                        avoidPoint = i;
+                    }
+                }
+                System.out.println(nodesAl.get(startPoint).data.toString() + " " + nodesAl.get(endPoint).data.toString());
+                if(startPoint != -1 && endPoint != -1) {
+                    // TODO GraphNodeAL.traverseGraphDepthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), (List<GraphNodeAL<?>>) nodesAl.get(endPoint));
+                }
+            }
         }
         if (startingStop.getValue().equals("Shortest Route")) {
             // Placeholder for shortest route logic
