@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.*;
 
 public class HelloController implements Initializable {
+
+    // FXML-injected UI components
     @FXML
     private ChoiceBox<String> searchOption;
     @FXML
@@ -23,17 +25,20 @@ public class HelloController implements Initializable {
     @FXML
     private ImageView mapView;
 
+    // Images for map display
     private Image detailedMap;
-
     private Image simpleMap;
 
+    // List to hold graph nodes representing stations
     private ArrayList<GraphNodeAL> nodesAl = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Add options to the choiceBox
+        // Populate the search option choice box
         searchOption.getItems().addAll("Fewest Stops", "Shortest Route", "Shortest with fewest changes");
+
         try {
+            // Read station data from CSV and set up the map
             csvReader();
             detailedMap = new Image(getClass().getResource("/Images/StationMapWithContent.png").openStream());
             mapView.setImage(detailedMap);
@@ -42,110 +47,107 @@ public class HelloController implements Initializable {
         }
     }
 
+    // Handler to switch to detailed map view
     public void detailedMap(ActionEvent actionEvent) throws IOException {
         detailedMap = new Image(getClass().getResource("/Images/StationMapWithContent.png").openStream());
         mapView.setImage(detailedMap);
     }
 
+    // Handler to switch to simplified map view
     public void simpleMap(ActionEvent actionEvent) throws IOException {
         simpleMap = new Image(getClass().getResource("/Images/StationMapBlank.png").openStream());
         mapView.setImage(simpleMap);
     }
 
+//    Placeholder for future logic based on selected search option
 //    public void choiceBoxOptions(ActionEvent actionEvent) throws IOException {
 //        if (searchOption.getValue().equals("Fewest Stops")) {
 //            String startingStop = startingStop.getValue();
 //        }
 //    }
 
+    // Reads station data from a CSV file and builds a graph
     public void csvReader() throws IOException {
         InputStream inputStream = getClass().getResourceAsStream("/data/vienna_subway.csv");
-
         BufferedReader csvReader = new BufferedReader(new InputStreamReader(inputStream));
 
         String line;
         ArrayList<String> stations = new ArrayList<>();
 
-
+        // Read each line from the CSV and extract station pairs
         while ((line = csvReader.readLine()) != null) {
-//            System.out.println(line);
             String[] data = line.split(",");
-//            System.out.println("Start = " + data[0] + " End = " + data[1]);
-
-            stations.add(data[0]);
-            stations.add(data[1]);
-
-
-
+            stations.add(data[0]); // Start station
+            stations.add(data[1]); // End station
         }
 
-        GraphNodeAL<String> a=null;
-        GraphNodeAL<String> b;
+        GraphNodeAL<String> a = null; // Current station node
+        GraphNodeAL<String> b;        // Previous station node
+        int l = 0;                    // Index of previous station node
 
-        int l=0;
-
+        // Build graph nodes and connect them
         for (int i = 0; i < stations.size(); i++) {
-            int k=0;
+            int k = 0; // Counter to check if node already exists
+
+            // Check if node already exists in the list
             for (int j = 0; j < nodesAl.size(); j++) {
-                if(nodesAl.size()==0){
-                    a=new GraphNodeAL<>(stations.get(0));
+                if (nodesAl.size() == 0) {
+                    a = new GraphNodeAL<>(stations.get(0));
                     nodesAl.add(a);
-                } else if (stations.get(i).equals(nodesAl.get(j).data)){
-                    k=k+1;
-                    a=nodesAl.get(j);
+                } else if (stations.get(i).equals(nodesAl.get(j).data)) {
+                    k = k + 1;
+                    a = nodesAl.get(j);
                     break;
                 }
             }
 
-
-            if(k==0){
+            // If the node doesn't exist, create and add it
+            if (k == 0) {
                 a = new GraphNodeAL<>(stations.get(i));
                 nodesAl.add(a);
             }
 
-            if(i%2==1){
-                b=nodesAl.get(l);
-                a.connectToNodeUndirected(b);
-            }else{
-                for (int j=0;j<nodesAl.size();j++){
-                    if(a.data.equals(nodesAl.get(j).data)){
-                        l=j;
+            // Connect every second station (i is odd) to the previous one
+            if (i % 2 == 1) {
+                b = nodesAl.get(l);
+                a.connectToNodeUndirected(b); // Undirected connection between nodes
+            } else {
+                // Store the current index for the next connection
+                for (int j = 0; j < nodesAl.size(); j++) {
+                    if (a.data.equals(nodesAl.get(j).data)) {
+                        l = j;
                         break;
                     }
                 }
             }
         }
 
-//        for (int i=0;i < nodesAl.size();i++){
-//            System.out.println(nodesAl.get(i).data);
-//            for (int j=0;j < nodesAl.get(i).adjList.size();j++) {
-//                GraphNodeAL<String> temp= (GraphNodeAL<String>) nodesAl.get(i).adjList.get(j);
-//                System.out.println(temp.data);
-//            }
-//            System.out.println("\n");
-//        }
-        for (int i=0;i<nodesAl.size();i++){
-            startingStop.getItems().add( nodesAl.get(i).data.toString());
-            endStop.getItems().add( nodesAl.get(i).data.toString());
+        // Populate the UI dropdowns with station names
+        for (int i = 0; i < nodesAl.size(); i++) {
+            startingStop.getItems().add(nodesAl.get(i).data.toString());
+            endStop.getItems().add(nodesAl.get(i).data.toString());
             avoidStop.getItems().add(nodesAl.get(i).data.toString());
         }
     }
 
-    public void exit(ActionEvent event)
-    {
+    // Closes the application when called
+    public void exit(ActionEvent event) {
         System.out.println("exit");
         System.exit(-1);
     }
 
+    // Handles logic for user's search choice
     public void choiceBox(ActionEvent actionEvent) {
         if (searchOption.getValue().equals("Fewest Stops")) {
-            //have to make method that takes choice box inputs and runs them through GraphNodeAL.traverseDepthFirstSearch()
-            GraphNodeAL.searchGraphDepthFirst(startingStop,endStop);// something like this
-        }//same thing for the rest
+            // Placeholder for fewest stops search logic
+            GraphNodeAL.searchGraphDepthFirst(startingStop, endStop);
+        }
         if (startingStop.getValue().equals("Shortest Route")) {
+            // Placeholder for shortest route logic
 //            GraphNodeAL.searchGraphDepthFirst(startingStop,endStop);
         }
         if (endStop.getValue().equals("Shortest with fewest changes")) {
+            // Placeholder for fewest changes logic
 //            GraphNodeAL.(startingStop,endStop);
         }
     }
