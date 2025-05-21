@@ -6,6 +6,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -24,6 +27,8 @@ public class HelloController implements Initializable {
     private ChoiceBox<String> avoidStop;
     @FXML
     private ImageView mapView;
+    @FXML
+    private Pane paneView;
 
     // Images for map display
     private Image detailedMap;
@@ -143,7 +148,7 @@ public class HelloController implements Initializable {
     }
 
     // Handles logic for user's search choice
-    public void choiceBox(ActionEvent actionEvent) {
+    public void choiceBox(ActionEvent actionEvent) throws IOException {
         int startPoint = -1;
         int endPoint = -1;
         int avoidPoint = -1;
@@ -167,8 +172,13 @@ public class HelloController implements Initializable {
                 ArrayList<GraphNodeAL<?>> results = GraphNodeAL.findPathBreadthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), nodesAl.get(endPoint).data);
                 for(int i=0;i<results.size();i++){
                     System.out.println(results.get(i).data);
-                    if(i<results.size()-1){System.out.println("vvvv");}
+                    if(i<results.size()-1){
+                        System.out.println("    |    ");
+                        System.out.println("    V    ");
+                    }
                 }
+                showRouteNoCost(results);
+                box();
             }
         }
         if (startingStop.getValue().equals("Shortest Route")) {
@@ -179,5 +189,22 @@ public class HelloController implements Initializable {
             // Placeholder for fewest changes logic
 //            GraphNodeAL.(startingStop,endStop);
         }
+    }
+
+    public void showRouteNoCost(ArrayList<GraphNodeAL<?>> arrayList) throws IOException {
+        clearScreen();
+
+    }
+
+    public void clearScreen() throws IOException {
+        paneView.getChildren().clear();
+        simpleMap = new Image(getClass().getResource("/Images/StationMapBlank.png").openStream());
+        ImageView mapView = new ImageView(simpleMap);
+        paneView.getChildren().add(mapView);
+    }
+
+    public void box(){
+        Rectangle rectangle = new Rectangle(100, 100, 100, 100);
+        paneView.getChildren().add(rectangle);
     }
 }
