@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 import java.io.*;
 import java.net.URL;
@@ -24,6 +25,8 @@ public class HelloController implements Initializable {
     private ChoiceBox<String> avoidStop;
     @FXML
     private ImageView mapView;
+    @FXML
+    private Pane paneView;
 
     // Images for map display
     private Image detailedMap;
@@ -167,7 +170,10 @@ public class HelloController implements Initializable {
                 ArrayList<GraphNodeAL<?>> results = GraphNodeAL.findPathBreadthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), nodesAl.get(endPoint).data);
                 for(int i=0;i<results.size();i++){
                     System.out.println(results.get(i).data);
-                    if(i<results.size()-1){System.out.println("vvvv");}
+                    if(i<results.size()-1){
+                        System.out.println("    |    ");
+                        System.out.println("    V    ");
+                    }
                 }
             }
         }
@@ -179,5 +185,17 @@ public class HelloController implements Initializable {
             // Placeholder for fewest changes logic
 //            GraphNodeAL.(startingStop,endStop);
         }
+    }
+
+    public void showRouteNoCost(ArrayList<GraphNodeAL> arrayList) throws IOException {
+        clearScreen();
+
+    }
+
+    public void clearScreen() throws IOException {
+        paneView.getChildren().clear();
+        simpleMap = new Image(getClass().getResource("/Images/StationMapBlank.png").openStream());
+        ImageView mapView = new ImageView(simpleMap);
+        paneView.getChildren().add(mapView);
     }
 }
