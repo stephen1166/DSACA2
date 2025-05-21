@@ -7,6 +7,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -146,7 +148,7 @@ public class HelloController implements Initializable {
     }
 
     // Handles logic for user's search choice
-    public void choiceBox(ActionEvent actionEvent) {
+    public void choiceBox(ActionEvent actionEvent) throws IOException {
         int startPoint = -1;
         int endPoint = -1;
         int avoidPoint = -1;
@@ -175,6 +177,8 @@ public class HelloController implements Initializable {
                         System.out.println("    V    ");
                     }
                 }
+                showRouteNoCost(results);
+                box();
             }
         }
         if (startingStop.getValue().equals("Shortest Route")) {
@@ -187,7 +191,7 @@ public class HelloController implements Initializable {
         }
     }
 
-    public void showRouteNoCost(ArrayList<GraphNodeAL> arrayList) throws IOException {
+    public void showRouteNoCost(ArrayList<GraphNodeAL<?>> arrayList) throws IOException {
         clearScreen();
 
     }
@@ -197,5 +201,10 @@ public class HelloController implements Initializable {
         simpleMap = new Image(getClass().getResource("/Images/StationMapBlank.png").openStream());
         ImageView mapView = new ImageView(simpleMap);
         paneView.getChildren().add(mapView);
+    }
+
+    public void box(){
+        Rectangle rectangle = new Rectangle(100, 100, 100, 100);
+        paneView.getChildren().add(rectangle);
     }
 }
