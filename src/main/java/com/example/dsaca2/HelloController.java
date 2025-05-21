@@ -40,7 +40,7 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Populate the search option choice box
-        searchOption.getItems().addAll("Fewest Stops", "Shortest Route", "Shortest with fewest changes");
+        searchOption.getItems().addAll("Fewest Stops","Fewest Stops Multiple Routes", "Shortest Route", "Shortest with fewest changes");
         startingStop.getItems().add("");
         startingStop.getSelectionModel().select(0);
         avoidStop.getItems().add("");
@@ -167,7 +167,6 @@ public class HelloController implements Initializable {
                     }
                 }
             }
-//            System.out.println(nodesAl.get(startPoint).data.toString() + " " + nodesAl.get(endPoint).data.toString());
             if(startPoint != -1 && endPoint != -1) {
                 ArrayList<GraphNodeAL<?>> results = GraphNodeAL.findPathBreadthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), nodesAl.get(endPoint).data);
                 for(int i=0;i<results.size();i++){
@@ -178,16 +177,25 @@ public class HelloController implements Initializable {
                     }
                 }
                 showRouteNoCost(results);
-                box();
+            }
+        }
+        if (searchOption.getValue().equals("Fewest Stops Multiple Routes")) {
+            ArrayList<ArrayList<GraphNodeAL<?>>> results = GraphNodeAL.findAllPathsDepthFirst((GraphNodeAL<?>) nodesAl.get(startPoint), null, nodesAl.get(endPoint).data);
+            for(int i=0;i<results.size();i++){
+                for(int j=0;j<results.size();j++) {
+                    System.out.println(results.get(i).get(j).data);
+
+                    if (i < results.size() - 1) {
+                        System.out.println("    |    ");
+                        System.out.println("    V    ");
+                    }
+                }
             }
         }
         if (startingStop.getValue().equals("Shortest Route")) {
-            // Placeholder for shortest route logic
-//            GraphNodeAL.searchGraphDepthFirst(startingStop,endStop);
         }
         if (endStop.getValue().equals("Shortest with fewest changes")) {
-            // Placeholder for fewest changes logic
-//            GraphNodeAL.(startingStop,endStop);
+
         }
     }
 
@@ -197,14 +205,10 @@ public class HelloController implements Initializable {
     }
 
     public void clearScreen() throws IOException {
-        paneView.getChildren().clear();
-        simpleMap = new Image(getClass().getResource("/Images/StationMapBlank.png").openStream());
-        ImageView mapView = new ImageView(simpleMap);
-        paneView.getChildren().add(mapView);
-    }
-
-    public void box(){
-        Rectangle rectangle = new Rectangle(100, 100, 100, 100);
-        paneView.getChildren().add(rectangle);
+        for(Object i : paneView.getChildren()){
+            if (!i.getClass().equals(ImageView.class)){
+                paneView.getChildren().remove(i);
+            }
+        }
     }
 }
