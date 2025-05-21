@@ -70,13 +70,6 @@ public class HelloController implements Initializable {
         mapView.setImage(simpleMap);
     }
 
-//    Placeholder for future logic based on selected search option
-//    public void choiceBoxOptions(ActionEvent actionEvent) throws IOException {
-//        if (searchOption.getValue().equals("Fewest Stops")) {
-//            String startingStop = startingStop.getValue();
-//        }
-//    }
-
     // Reads station data from a CSV file and builds a graph
     public void csvReader() throws IOException {
         InputStream inputStream = getClass().getResourceAsStream("/data/vienna_subway.csv");
