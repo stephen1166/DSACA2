@@ -116,58 +116,12 @@ public class HelloController implements Initializable {
             a.connectToNodeUndirected(b, Integer.parseInt(data[4]));
         }
         for (int i = 0; i < nodesAl.size(); i++) {
-//            System.out.println(nodesAl.get(i).data);
-//            for (int j=0;j<nodesAl.get(i).adjList.size();j++){
-//                GraphNode.GraphLink temp = (GraphNode.GraphLink) nodesAl.get(i).adjList.get(j);
-//                System.out.println(temp.destNode.data);
-//            }
-//            System.out.println("");
             startingStop.getItems().add(nodesAl.get(i).data.toString());
             endStop.getItems().add(nodesAl.get(i).data.toString());
             avoidStop.getItems().add(nodesAl.get(i).data.toString());
         }
 
-//        GraphNode<String> a = null; // Current station node
-//        GraphNode<String> b = null;        // Previous station node
-//        int l = 0;                    // Index of previous station node
-//
-//        // Build graph nodes and connect them
-//        for (int i = 0; i < stations.size(); i++) {
-//            int k = 0; // Counter to check if node already exists
-//
-//            // Check if node already exists in the list
-//            for (int j = 0; j < nodesAl.size(); j++) {
-//                if (nodesAl.size() == 0) {
-//                    a = new GraphNode<>(stations.get(0));
-//                    nodesAl.add(a);
-//                } else if (stations.get(i).equals(nodesAl.get(j).data)) {
-//                    k = k + 1;
-//                    a = nodesAl.get(j);
-//                    break;
-//                }
-//            }
 
-//            // If the node doesn't exist, create and add it
-//            if (k == 0) {
-//                a = new GraphNode<>(stations.get(i));
-//                nodesAl.add(a);
-//            }
-//
-//            // Connect every second station (i is odd) to the previous one
-//            if (i % 2 == 1) {
-//                b = nodesAl.get(l);
-//                a.connectToNodeUndirected(b); // Undirected connection between nodes
-//            } else {
-//                // Store the current index for the next connection
-//                for (int j = 0; j < nodesAl.size(); j++) {
-//                    if (a.data.equals(nodesAl.get(j).data)) {
-//                        l = j;
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-        // Populate the UI dropdowns with station names
     }
 
     // Closes the application when called
