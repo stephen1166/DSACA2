@@ -38,6 +38,33 @@ public class GraphNode<T> {
         return null;
     }
 
+    //Recursive depth-first search of graph (all paths identified returned)
+    public static <T> ArrayList<ArrayList<GraphNode<?>>> findAllPathsDepthFirst(GraphNode<?> from, ArrayList<GraphNode<?>> encountered, T lookingfor) {
+        ArrayList<ArrayList<GraphNode<?>>> result = null, temp2;
+        if (from.data.equals(lookingfor)) { //Found it
+            ArrayList<GraphNode<?>> temp = new ArrayList<>(); //Create new single solution path list
+            temp.add(from); //Add current node to the new single path list
+            result = new ArrayList<>(); //Create new "list of lists" to store path permutations
+            result.add(temp); //Add the new single path list to the path permutations list
+            return result; //Return the path permutations list
+        }
+        if (encountered == null) encountered = new ArrayList<>(); //First node so create new (empty) encountered list
+        encountered.add(from); //Add current node to encountered list
+        for (GraphNode.GraphLink adjNode : from.adjList) {
+            if (!encountered.contains(adjNode)) {
+                temp2 = findAllPathsDepthFirst(adjNode.destNode, new ArrayList<>(encountered), lookingfor); //Use clone of encountered list for recursive call!
+                if (temp2 != null) { //Result of the recursive call contains one or more paths to the solution node
+                    for (ArrayList<GraphNode<?>> x : temp2) //For each partial path list returned
+                        x.add(0, from); //Add the current node to the front of each path list
+                    if (result == null)
+                        result = temp2; //If this is the first set of solution paths found use it as the result
+                    else result.addAll(temp2); //Otherwise append them to the previously found paths
+                }
+            }
+        }
+        return result;
+    }
+
     //Interface method to allow just the starting node and the goal node data to match to be specified
     public static <T> ArrayList<GraphNode<?>> findPathBreadthFirst(GraphNode<?> startNode, T lookingfor) {
         ArrayList<ArrayList<GraphNode<?>>> agenda = new ArrayList<>(); //Agenda comprised of path lists here!
