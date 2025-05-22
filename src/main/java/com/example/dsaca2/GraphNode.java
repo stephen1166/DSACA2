@@ -73,7 +73,6 @@ public class GraphNode<T> {
         firstAgendaPath.add(startNode);
         agenda.add(firstAgendaPath);
         resultPath = findPathBreadthFirst(agenda, null, lookingfor); //Get single BFS path (will be shortest)
-        System.out.println(resultPath.size());
         Collections.reverse(resultPath); //Reverse path (currently has the goal node as the first item)
         return resultPath;
     }
@@ -95,7 +94,6 @@ public class GraphNode<T> {
                 newPath.add(0, adjLink.destNode); //And add the adjacent node to the front of the new copy
                 agenda.add(newPath); //Add the new path to the end of agenda (end->BFS!)
             }
-        System.out.println(encountered.size());
         return findPathBreadthFirst(agenda, encountered, lookingfor); //Tail call
     }
 }

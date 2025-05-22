@@ -152,7 +152,9 @@ public class HelloController implements Initializable {
             // Placeholder for fewest stops search logic
             if(startPoint != -1 && endPoint != -1) {
                 ArrayList<GraphNode<?>> results = findPathBreadthFirst(nodesAl.get(startPoint), nodesAl.get(endPoint).data);
+                System.out.println("-------------------------------");
                 for(int i=0;i<results.size();i++){
+                    System.out.println(results.get(i).data);
                     if(i<results.size()-1){
                         System.out.println("    |    ");
                         System.out.println("    V    ");
