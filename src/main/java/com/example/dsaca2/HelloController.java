@@ -167,9 +167,9 @@ public class HelloController implements Initializable {
             ArrayList<ArrayList<GraphNode<?>>> results = findAllPathsDepthFirst((GraphNode<?>) nodesAl.get(startPoint), null, nodesAl.get(endPoint).data);
             for(int i=0;i<results.size();i++){
                 System.out.println("-------------------------------");
-                for(int j=0;j<results.size();j++) {
+                for(int j=0;j<results.get(i).size();j++) {
                     System.out.println(results.get(i).get(j).data);
-                    if (i < results.size()-1) {
+                    if (j < results.get(i).size()-1) {
                         System.out.println("    |    ");
                         System.out.println("    V    ");
                     }
