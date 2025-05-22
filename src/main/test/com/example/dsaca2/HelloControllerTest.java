@@ -45,7 +45,6 @@ public class HelloControllerTest {
         assertEquals(startingItems, endItems, "End stops should match starting stops");
         assertEquals(startingItems, avoidItems, "Avoid stops should match starting stops");
 
-        // Optional: known station check
         assertTrue(
                 startingItems.contains("Karlsplatz") || startingItems.contains("Stephansplatz"),
                 "station not in the list"
@@ -54,14 +53,14 @@ public class HelloControllerTest {
 
     @Test
     void testDetailedMapSetsImage() throws Exception {
-        controller.mapView = new ImageView(); // use real one
+        controller.mapView = new ImageView();
         controller.detailedMap(null);
         assertNotNull(controller.mapView.getImage(), "ImageView, no image");
     }
 
     @Test
     void testSimpleMapSetsImage() throws Exception {
-        controller.mapView = new ImageView(); // use real one
+        controller.mapView = new ImageView();
         controller.simpleMap(null);
         assertNotNull(controller.mapView.getImage(), "ImageView, no image");
     }
