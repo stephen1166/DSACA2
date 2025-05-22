@@ -162,6 +162,7 @@ public class HelloController implements Initializable {
                         RouteDisplay.appendText("\n"+"V");
                     }
                 }
+                RouteDisplay.appendText("\n-------------------------------");
                 showRouteNoCost(results);
             }
         }
@@ -180,6 +181,7 @@ public class HelloController implements Initializable {
                         RouteDisplay.appendText("\n"+"V");
                     }
                 }
+                RouteDisplay.appendText("\n-------------------------------");
             }
         }
         if (startingStop.getValue().equals("Shortest Route")) {
