@@ -23,13 +23,13 @@ public class HelloController implements Initializable {
     @FXML
     private ChoiceBox<String> searchOption;
     @FXML
-    private ChoiceBox<String> startingStop;
+    public ChoiceBox<String> startingStop;
     @FXML
-    private ChoiceBox<String> endStop;
+    public ChoiceBox<String> endStop;
     @FXML
-    private ChoiceBox<String> avoidStop;
+    public ChoiceBox<String> avoidStop;
     @FXML
-    private ImageView mapView;
+   public ImageView mapView;
     @FXML
     private Pane paneView;
 
