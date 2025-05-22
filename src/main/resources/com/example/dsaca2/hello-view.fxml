@@ -43,9 +43,9 @@
                   <Button mnemonicParsing="false" onAction="#choiceBox" text="Confirm" />
                </children>
             </VBox>
-            <VBox fx:id="RouteDisplay" alignment="CENTER" prefHeight="762.0" prefWidth="204.0">
+            <VBox  alignment="CENTER" prefHeight="762.0" prefWidth="204.0">
                <children>
-                  <TextArea prefHeight="356.0" prefWidth="198.0" />
+                  <TextArea fx:id="RouteDisplay" prefHeight="650" prefWidth="198.0" editable="false" wrapText="true"/>
                </children>
             </VBox>
             <VBox alignment="CENTER" minWidth="500.0" prefHeight="762.0" prefWidth="1008.0" spacing="10.0">

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -32,6 +33,8 @@ public class HelloController implements Initializable {
    public ImageView mapView;
     @FXML
     private Pane paneView;
+    @FXML
+    private TextArea RouteDisplay;
 
     // Images for map display
     private Image detailedMap;
@@ -151,27 +154,30 @@ public class HelloController implements Initializable {
         if (searchOption.getValue().equals("Fewest Stops")) {
             // Placeholder for fewest stops search logic
             if(startPoint != -1 && endPoint != -1) {
+                RouteDisplay.clear();
                 ArrayList<GraphNode<?>> results = findPathBreadthFirst(nodesAl.get(startPoint), nodesAl.get(endPoint).data);
-                System.out.println("-------------------------------");
                 for(int i=0;i<results.size();i++){
-                    System.out.println(results.get(i).data);
+                    RouteDisplay.appendText("\n"+results.get(i).data);
                     if(i<results.size()-1){
-                        System.out.println("    |    ");
-                        System.out.println("    V    ");
+                        RouteDisplay.appendText("\n"+"V");
                     }
                 }
                 showRouteNoCost(results);
             }
         }
         if (searchOption.getValue().equals("Fewest Stops Multiple Routes")) {
+            RouteDisplay.clear();
             ArrayList<ArrayList<GraphNode<?>>> results = findAllPathsDepthFirst((GraphNode<?>) nodesAl.get(startPoint), null, nodesAl.get(endPoint).data);
             for(int i=0;i<results.size();i++){
-                System.out.println("-------------------------------");
+                if (!(i>0)){
+                    RouteDisplay.appendText("\n-------------------------------");
+                }
                 for(int j=0;j<results.get(i).size();j++) {
                     System.out.println(results.get(i).get(j).data);
+                    RouteDisplay.appendText("\n"+results.get(i).get(j).data);
                     if (j < results.get(i).size()-1) {
-                        System.out.println("    |    ");
                         System.out.println("    V    ");
+                        RouteDisplay.appendText("\n"+"V");
                     }
                 }
             }
@@ -179,7 +185,6 @@ public class HelloController implements Initializable {
         if (startingStop.getValue().equals("Shortest Route")) {
         }
         if (endStop.getValue().equals("Shortest with fewest changes")) {
-
         }
     }
 
