@@ -39,12 +39,16 @@
                         <ChoiceBox fx:id="endStop" prefWidth="150.0" />
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" text="Confirm" />
+                  <Button mnemonicParsing="false" onAction="#choiceBox" text="Confirm" />
                </children>
             </VBox>
             <VBox alignment="CENTER" minWidth="500.0" prefHeight="762.0" prefWidth="1008.0" spacing="10.0">
                <children>
-                  <ImageView fx:id="mapView" fitHeight="724.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" />
+                  <Pane fx:id="paneView" prefHeight="781.0" prefWidth="1000.0">
+                     <children>
+                        <ImageView fx:id="mapView" fitHeight="724.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#detailedMap" text="Detailed Map" />
@@ -57,7 +61,7 @@
       </HBox>
       <ToolBar minWidth="1500.0" prefHeight="40.0" prefWidth="200.0">
         <items>
-           <Button mnemonicParsing="false" text="Button" onAction="#exit"/>
+           <Button mnemonicParsing="false" onAction="#exit" text="Button" />
         </items>
       </ToolBar>
    </children>
